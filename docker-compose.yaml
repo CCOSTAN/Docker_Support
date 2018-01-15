@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+  mqtt:
+    image: eclipse-mosquitto:latest
+    container_name: "MQTT"
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mqtt-data:/mosquitto/data
+      - /home/$USER/docker_files/mqtt/config:/mosquitto/config
+      - /home/$USER/docker_files/mqtt/log:/mosquitto/log
+    network_mode: "host"
+
+  home-assistant:
+    image: homeassistant/home-assistant:dev
+    container_name: "hass"
+    restart: always
+    depends_on:
+      - mqtt
+    ports:
+      - "8123:8123"
+    volumes:
+      - /home/$USER/docker_files/homeassistant/config:/config
+    network_mode: "host"
+
+  homebridge:
+    image: oznu/homebridge:latest
+    container_name: "homebridge"
+    restart: always
+    depends_on:
+      - home-assistant
+    network_mode: host
+    environment:
+      - TZ=America/New_York
+      - PGID=1000
+      - PUID=1000
+    volumes:
+      - /home/$USER/docker_files/homebridge:/homebridge
+
+  dasher:
+    image: clemenstyp/dasher-docker:latest
+    container_name: "Dasher"
+    restart: always
+    depends_on:
+      - homebridge
+    volumes:
+      - ./dasher/config:/root/dasher/config
+    network_mode: "host"
+    
+  unifi:
+    image: jacobalberty/unifi:latest
+    container_name: "Unifi"
+    restart: always
+    volumes:
+      - ./unifi/data:/unifi/data
+    ports:
+     - 3478:3478/udp
+     - 10001:10001/udp
+     - 6789:6789/tcp
+     - 8080:8080/tcp
+     - 8880:8880/tcp
+     - 8443:8443/tcp
+     - 8843:8843/tcp
+    environment:
+     - TZ=America/New_York
+    network_mode: "host"
+
+volumes:
+  mqtt-data:
