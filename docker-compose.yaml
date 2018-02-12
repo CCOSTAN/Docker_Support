@@ -9,17 +9,20 @@ services:
       - "1883:1883"
       - "9001:9001"
     volumes:
-      - mqtt-data:/mosquitto/data
+      - /home/$USER/docker_files/mqtt/data:/mosquitto/data
       - /home/$USER/docker_files/mqtt/config:/mosquitto/config
       - /home/$USER/docker_files/mqtt/log:/mosquitto/log
     network_mode: "host"
 
+  
   home-assistant:
-    image: homeassistant/home-assistant:dev
+    #image: homeassistant/home-assistant:0.61.1
+    image: homeassistant/home-assistant:latest
     container_name: "hass"
     restart: always
     depends_on:
       - mqtt
+      - minecraft
     ports:
       - "8123:8123"
     volumes:
@@ -57,16 +60,40 @@ services:
     volumes:
       - ./unifi/data:/unifi/data
     ports:
-     - 3478:3478/udp
-     - 10001:10001/udp
-     - 6789:6789/tcp
-     - 8080:8080/tcp
-     - 8880:8880/tcp
-     - 8443:8443/tcp
-     - 8843:8843/tcp
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 6789:6789/tcp
+      - 8080:8080/tcp
+      - 8880:8880/tcp
+      - 8443:8443/tcp
+      - 8843:8843/tcp
     environment:
-     - TZ=America/New_York
+      - TZ=America/New_York
     network_mode: "host"
 
-volumes:
-  mqtt-data:
+    
+  minecraft:
+    #image: itzg/minecraft-server
+    image: ashdev/docker-spigot:1.12.2
+    container_name: "MC"
+    ports:
+      - "25565:25565"
+    volumes:
+      #- ./minecraft/data:/data
+      - ./minecraft/data:/minecraft
+    tty: true
+    stdin_open: true
+    restart: always
+    network_mode: "host"  
+    environment:
+      EULA: "TRUE"
+      #TYPE: "FORGE"
+      DIFFICULTY: "normal"
+      OPS: "MyKid123"
+      #ICON: "https://pbs.twimg.com/profile_images/938049421459288064/1gdDDKnH_400x400.jpg"
+      ENABLE_COMMAND_BLOCK: "true"
+      ANNOUNCE_PLAYER_ACHIEVEMENTS: "true"
+      GENERATE_STRUCTURES: "true"
+         
+    
+
