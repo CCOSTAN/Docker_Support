@@ -53,7 +53,7 @@ services:
   home-assistant:
     #image: homeassistant/home-assistant:0.64.3
     image: homeassistant/home-assistant:latest
-    container_name: "HASS"
+    container_name: "hass"
     restart: always
     depends_on:
       influxdb:
