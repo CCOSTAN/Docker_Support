@@ -1,6 +1,20 @@
 version: '2.1'
 
 services:
+  muximux:
+    image: linuxserver/muximux:latest
+    container_name: muximux
+    restart: always
+    network_mode: "host"  
+    ports:
+      - 8888:80
+    volumes:
+      - /home/$USER/docker_files/muximux:/config
+    environment:
+      - TZ=America/New_York
+      - PGID=1000
+      - PUID=1000
+      
   mqtt:
     image: eclipse-mosquitto:latest
     container_name: "MQTT"
@@ -17,7 +31,7 @@ services:
       - TZ=America/New_York
 
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:latest
     container_name: "grafana"
     depends_on:
       influxdb:
@@ -31,9 +45,10 @@ services:
     restart: on-failure
     volumes:
       - /home/$USER/docker_files/grafana:/var/lib/grafana
+    network_mode: host
 
   influxdb:
-    image: influxdb
+    image: influxdb:latest
     container_name: "influxdb"
     healthcheck:
       test: ["CMD", "curl", "-sI", "http://127.0.0.1:8086/ping"]
