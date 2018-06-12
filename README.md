@@ -40,6 +40,10 @@ This is my Docker-Compose YAML file.  Check it out to see what Containers I am r
     </a>
   </h4>
 
+<a name="logo" href="https://github.com/CCOSTAN/Home-AssistantConfig#logo"><img src="https://i.imgur.com/OTbLmcZ.png" alt="Bear Stone Containers" width="200"></a>
+
+
+
 <a name="bottom" href="https://github.com/CCOSTAN/Home-AssistantConfig#logo"><img align="right" border="0" src="https://scontent-mxp1-1.xx.fbcdn.net/v/t34.0-12/28511153_10155579658673155_2146314492_n.png?_nc_ad=z-m&_nc_cid=0&oh=0d6dd551695860471c45d5b7b17c3cd8&oe=5A99DB47" width="50" ></a>
 
 **Still have questions on my Config?**
