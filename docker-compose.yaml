@@ -5,20 +5,35 @@ services:
     image: linuxserver/muximux:latest
     container_name: muximux
     restart: always
-    network_mode: "host"  
+    network_mode: host
     ports:
-      - 8888:80
+      - 80:80
     volumes:
       - /home/$USER/docker_files/muximux:/config
     environment:
       - TZ=America/New_York
       - PGID=1000
       - PUID=1000
-      
+ 
+  esphomeyaml: 
+    image: ottowinter/esphomeyaml:latest
+    container_name: esphomeyaml
+    command: esphomeyaml dashboard
+    restart: always
+    network_mode: host
+    ports:
+      - 6052:6052
+      - 6123:6123
+    volumes:
+      - /home/$USER/docker_files/esphomeyaml:/config
+    environment:
+      - TZ=America/New_York
+
   mqtt:
     image: eclipse-mosquitto:latest
-    container_name: "MQTT"
+    container_name: "mqtt"
     restart: always
+    network_mode: host
     ports:
       - 1883:1883
       - 9001:9001
@@ -26,7 +41,6 @@ services:
       - /home/$USER/docker_files/mqtt/data:/mosquitto/data
       - /home/$USER/docker_files/mqtt/config:/mosquitto/config
       - /home/$USER/docker_files/mqtt/log:/mosquitto/log
-    network_mode: "host"
     environment:
       - TZ=America/New_York
 
@@ -40,12 +54,12 @@ services:
       - TZ=America/New_York
       - PGID=1000
       - PUID=1000
+    network_mode: host
     ports:
       - 3000:3000
     restart: on-failure
     volumes:
       - /home/$USER/docker_files/grafana:/var/lib/grafana
-    network_mode: host
 
   influxdb:
     image: influxdb:latest
@@ -55,9 +69,9 @@ services:
       interval: 30s
       timeout: 1s
       retries: 24
-    network_mode: host
     environment:
       - TZ=America/New_York
+    network_mode: host
     ports:
       - 8083:8083
       - 8086:8086
@@ -66,7 +80,7 @@ services:
       - /home/$USER/docker_files/influxdb:/var/lib/influxdb
 
   home-assistant:
-    #image: homeassistant/home-assistant:0.64.3
+    #image: homeassistant/home-assistant:rc
     image: homeassistant/home-assistant:latest
     container_name: "hass"
     restart: always
@@ -76,15 +90,15 @@ services:
       mqtt:
         condition: service_started
     healthcheck:
-      test: ["CMD", "curl", "-f", "https://REDACTED"]
+      test: ["CMD", "curl", "-f", "[REDACTED]"]
       interval: 30s
       timeout: 10s
       retries: 6
+    network_mode: host
     ports:
       - 8123:8123
     volumes:
       - /home/$USER/docker_files/homeassistant/config:/config
-    network_mode: "host"
     environment:
       - TZ=America/New_York
 
@@ -112,7 +126,7 @@ services:
         condition: service_started
     volumes:
       - ./dasher/config:/root/dasher/config
-    network_mode: "host"
+    network_mode: host
 
   unifi:
     image: jacobalberty/unifi:latest
@@ -120,6 +134,7 @@ services:
     restart: always
     volumes:
       - ./unifi/data:/unifi/data
+    network_mode: host
     ports:
       - 3478:3478/udp
       - 10001:10001/udp
@@ -130,28 +145,4 @@ services:
       - 8843:8843/tcp
     environment:
       - TZ=America/New_York
-    network_mode: "host"
 
-
-  # minecraft:
-    # #image: itzg/minecraft-server
-    # image: ashdev/docker-spigot:1.12.2
-    # container_name: "MC"
-    # ports:
-      # - "25565:25565"
-    # volumes:
-      # #- ./minecraft/data:/data
-      # - ./minecraft/data:/minecraft
-    # tty: true
-    # stdin_open: true
-    # restart: always
-    # network_mode: "host"
-    # environment:
-      # EULA: "TRUE"
-      # #TYPE: "FORGE"
-      # DIFFICULTY: "normal"
-      # OPS: "REDACTED"
-      # #ICON: "https://pbs.twimg.com/profile_images/938049421459288064/1gdDDKnH_400x400.jpg"
-      # ENABLE_COMMAND_BLOCK: "true"
-      # ANNOUNCE_PLAYER_ACHIEVEMENTS: "true"
-      # GENERATE_STRUCTURES: "true"
