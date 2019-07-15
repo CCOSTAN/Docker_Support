@@ -58,7 +58,7 @@ Here is how all the parts talk to each other.  Keep reading to see code examples
 
 
 #### <a name="blogposts"></a>Docker Container Write ups
-![Upgrading Cockpit](https://www.vcloudinfo.com/2019/07/how-to-upgrade-docker-cockpit-on-ubuntu-18-04.html)
+[Upgrading Cockpit](https://www.vcloudinfo.com/2019/07/how-to-upgrade-docker-cockpit-on-ubuntu-18-04.html)
 
 #**Still have questions on my Config?**
 **Message me on twitter :** [@CCostan](https://twitter.com/ccostan) or [@BearStoneHA](https://twitter.com/BearStoneHA)
