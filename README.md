@@ -42,10 +42,6 @@ This is my Docker-Compose YAML file.  Check it out to see what Containers I am r
     <a href="https://github.com/CCOSTAN/Home-AssistantConfig#diagram">
       Diagram
     </a>
-    <span> | </span>
-    <a href="https://github.com/CCOSTAN/Home-AssistantConfig#blogposts">
-      Container Write ups
-    </a>
   </h4>
 
 <a name="logo" href="https://github.com/CCOSTAN/Home-AssistantConfig#logo"><img src="https://i.imgur.com/OTbLmcZ.png" alt="Bear Stone Containers" ></a>
