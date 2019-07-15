@@ -42,6 +42,10 @@ This is my Docker-Compose YAML file.  Check it out to see what Containers I am r
     <a href="https://github.com/CCOSTAN/Home-AssistantConfig#diagram">
       Diagram
     </a>
+    <span> | </span>
+    <a href="https://github.com/CCOSTAN/Home-AssistantConfig#blogposts">
+      Container Write ups
+    </a>
   </h4>
 
 <a name="logo" href="https://github.com/CCOSTAN/Home-AssistantConfig#logo"><img src="https://i.imgur.com/OTbLmcZ.png" alt="Bear Stone Containers" ></a>
@@ -52,6 +56,9 @@ Here is how all the parts talk to each other.  Keep reading to see code examples
 
 <p align="center"><strong>Smart Home diagram (<a href="https://pbs.twimg.com/media/Dg_CPwVU8AEyC2B.jpg:large"><code>PNG</code></a>). Made with <a href="https://www.draw.io">Draw.io</a> (<a href="https://raw.githubusercontent.com/CCOSTAN/Docker_Support/master/BearStoneFlow.xml"><code>XML</code></a> source file).</strong></p>
 
+
+#### <a name="blogposts"></a>Docker Container Write ups
+![Upgrading Cockpit](https://www.vcloudinfo.com/2019/07/how-to-upgrade-docker-cockpit-on-ubuntu-18-04.html)
 
 #**Still have questions on my Config?**
 **Message me on twitter :** [@CCostan](https://twitter.com/ccostan) or [@BearStoneHA](https://twitter.com/BearStoneHA)
