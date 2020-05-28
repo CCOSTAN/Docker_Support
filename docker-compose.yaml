@@ -5,17 +5,17 @@ services:
     image: linuxserver/muximux:latest
     container_name: muximux
     restart: always
-    network_mode: host
     ports:
-      - 80:80
+      - 880:80
+      - 888:443
     volumes:
       - /home/$USER/docker_files/muximux:/config
     environment:
       - TZ=America/New_York
       - PGID=1000
       - PUID=1000
- 
-  esphomeyaml: 
+
+  esphomeyaml:
     image: ottowinter/esphomeyaml:latest
     container_name: esphomeyaml
     command: esphomeyaml dashboard
@@ -80,7 +80,7 @@ services:
       - /home/$USER/docker_files/influxdb:/var/lib/influxdb
 
   home-assistant:
-    #image: homeassistant/home-assistant:rc
+    #image: homeassistant/home-assistant:0.101.3
     image: homeassistant/home-assistant:latest
     container_name: "hass"
     restart: always
@@ -90,13 +90,13 @@ services:
       mqtt:
         condition: service_started
     healthcheck:
-      test: ["CMD", "curl", "-f", "[REDACTED]"]
+      test: ["CMD", "curl", "-f", "https://yourServerAt.Nabu.casa"]
       interval: 30s
       timeout: 10s
       retries: 6
     network_mode: host
     ports:
-      - 8123:8123
+      - 443:443
     volumes:
       - /home/$USER/docker_files/homeassistant/config:/config
     environment:
@@ -145,4 +145,5 @@ services:
       - 8843:8843/tcp
     environment:
       - TZ=America/New_York
+      
 
