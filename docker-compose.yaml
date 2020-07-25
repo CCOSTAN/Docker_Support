@@ -51,15 +51,24 @@ services:
       influxdb:
         condition: service_healthy
     environment:
-      - TZ=America/New_York
-      - PGID=1000
-      - PUID=1000
+      GF_RENDERING_SERVER_URL: http://192.168.10.10:8081/render
+      GF_RENDERING_CALLBACK_URL: http://192.168.10.10:3000/
+      GF_LOG_FILTERS: rendering:debug
     network_mode: host
     ports:
       - 3000:3000
     restart: on-failure
     volumes:
       - /home/$USER/docker_files/grafana:/var/lib/grafana
+
+  renderer:
+    image: grafana/grafana-image-renderer:latest
+    container_name: "grafana-renderer"
+    depends_on:
+      grafana:
+        condition: service_started
+    ports:
+      - 8081:8081
 
   influxdb:
     image: influxdb:latest
@@ -80,8 +89,9 @@ services:
       - /home/$USER/docker_files/influxdb:/var/lib/influxdb
 
   home-assistant:
-    image: homeassistant/home-assistant:0.110.4
-    #image: homeassistant/home-assistant:latest
+    #image: homeassistant/home-assistant:0.110.4    #Specific Version
+    image: homeassistant/home-assistant:latest     #Latest Production
+    #image: homeassistant/home-assistant:rc          #Latest Beta Code
     container_name: "hass"
     restart: always
     depends_on:
@@ -89,11 +99,6 @@ services:
         condition: service_healthy
       mqtt:
         condition: service_started
-    healthcheck:
-      test: ["CMD", "curl", "-f", "https://HomeAssistant.vCloudInfo.com"]
-      interval: 30s
-      timeout: 10s
-      retries: 6
     network_mode: host
     ports:
       - 443:443
@@ -101,21 +106,6 @@ services:
       - /home/$USER/docker_files/homeassistant/config:/config
     environment:
       - TZ=America/New_York
-
-  # homebridge:
-    # image: oznu/homebridge:latest
-    # container_name: "homebridge"
-    # restart: always
-    # depends_on:
-      # home-assistant:
-        # condition: service_healthy
-    # network_mode: host
-    # environment:
-      # - TZ=America/New_York
-      # - PGID=1000
-      # - PUID=1000
-    # volumes:
-      # - /home/$USER/docker_files/homebridge:/homebridge
 
   dasher:
     image: clemenstyp/dasher-docker:latest
@@ -146,4 +136,4 @@ services:
     environment:
       - TZ=America/New_York
       
-
+      
