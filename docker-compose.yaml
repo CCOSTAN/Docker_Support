@@ -15,20 +15,6 @@ services:
       - PGID=1000
       - PUID=1000
 
-  esphomeyaml:
-    image: ottowinter/esphomeyaml:latest
-    container_name: esphomeyaml
-    command: esphomeyaml dashboard
-    restart: always
-    network_mode: host
-    ports:
-      - 6052:6052
-      - 6123:6123
-    volumes:
-      - /home/$USER/docker_files/esphomeyaml:/config
-    environment:
-      - TZ=America/New_York
-
   mqtt:
     image: eclipse-mosquitto:latest
     container_name: "mqtt"
@@ -89,7 +75,7 @@ services:
       - /home/$USER/docker_files/influxdb:/var/lib/influxdb
 
   home-assistant:
-    #image: homeassistant/home-assistant:0.110.4    #Specific Version
+    #image: homeassistant/home-assistant:2021.2.3    #Specific Version
     image: homeassistant/home-assistant:latest     #Latest Production
     #image: homeassistant/home-assistant:rc          #Latest Beta Code
     container_name: "hass"
@@ -120,6 +106,7 @@ services:
 
   unifi:
     image: jacobalberty/unifi:latest
+    #image: jacobalberty/unifi:stable-5
     container_name: "Unifi"
     restart: always
     volumes:
