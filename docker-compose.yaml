@@ -30,50 +30,6 @@ services:
     environment:
       - TZ=America/New_York
 
-  grafana:
-    image: grafana/grafana:latest
-    container_name: "grafana"
-    depends_on:
-      influxdb:
-        condition: service_healthy
-    environment:
-      GF_RENDERING_SERVER_URL: http://192.168.10.10:8081/render
-      GF_RENDERING_CALLBACK_URL: http://192.168.10.10:3000/
-      GF_LOG_FILTERS: rendering:debug
-    network_mode: host
-    ports:
-      - 3000:3000
-    restart: on-failure
-    volumes:
-      - /home/$USER/docker_files/grafana:/var/lib/grafana
-
-  renderer:
-    image: grafana/grafana-image-renderer:latest
-    container_name: "grafana-renderer"
-    depends_on:
-      grafana:
-        condition: service_started
-    ports:
-      - 8081:8081
-
-  influxdb:
-    image: influxdb:latest
-    container_name: "influxdb"
-    healthcheck:
-      test: ["CMD", "curl", "-sI", "http://127.0.0.1:8086/ping"]
-      interval: 30s
-      timeout: 1s
-      retries: 24
-    environment:
-      - TZ=America/New_York
-    network_mode: host
-    ports:
-      - 8083:8083
-      - 8086:8086
-    restart: on-failure
-    volumes:
-      - /home/$USER/docker_files/influxdb:/var/lib/influxdb
-
   home-assistant:
     #image: homeassistant/home-assistant:2021.2.3    #Specific Version
     image: homeassistant/home-assistant:latest     #Latest Production
@@ -81,8 +37,6 @@ services:
     container_name: "hass"
     restart: always
     depends_on:
-      influxdb:
-        condition: service_healthy
       mqtt:
         condition: service_started
     network_mode: host
