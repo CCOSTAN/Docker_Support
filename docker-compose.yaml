@@ -1,25 +1,26 @@
 version: '2.1'
 
 services:
-  muximux:
-    image: linuxserver/muximux:latest
-    container_name: muximux
-    restart: always
-    ports:
-      - 880:80
-      - 888:443
-    volumes:
-      - /home/$USER/docker_files/muximux:/config
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    network_mode: host
     environment:
       - TZ=America/New_York
-      - PGID=1000
-      - PUID=1000
+      - WEBPASSWORD=PasswordPasswordPassword
+    # Volumes store your data between container upgrades
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
+    restart: always
 
   mqtt:
     image: eclipse-mosquitto:latest
     container_name: "mqtt"
     restart: always
-    network_mode: host
     ports:
       - 1883:1883
       - 9001:9001
@@ -31,7 +32,7 @@ services:
       - TZ=America/New_York
 
   home-assistant:
-    #image: homeassistant/home-assistant:2021.2.3    #Specific Version
+    #image: homeassistant/home-assistant:2021.11.5    #Specific Version
     image: homeassistant/home-assistant:latest     #Latest Production
     #image: homeassistant/home-assistant:rc          #Latest Beta Code
     container_name: "hass"
@@ -39,24 +40,13 @@ services:
     depends_on:
       mqtt:
         condition: service_started
-    network_mode: host
     ports:
-      - 443:443
+      - 8123:8123
     volumes:
       - /home/$USER/docker_files/homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - TZ=America/New_York
-
-  dasher:
-    image: clemenstyp/dasher-docker:latest
-    container_name: "Dasher"
-    restart: always
-    # depends_on:
-      # homebridge:
-        # condition: service_started
-    volumes:
-      - ./dasher/config:/root/dasher/config
-    network_mode: host
 
   unifi:
     image: jacobalberty/unifi:latest
@@ -65,7 +55,6 @@ services:
     restart: always
     volumes:
       - ./unifi/data:/unifi/data
-    network_mode: host
     ports:
       - 3478:3478/udp
       - 10001:10001/udp
@@ -76,5 +65,19 @@ services:
       - 8843:8843/tcp
     environment:
       - TZ=America/New_York
-      
-      
+
+  wyze-bridge:
+      image: mrlt8/wyze-bridge:latest
+      container_name: wyze-bridge
+      restart: unless-stopped
+      ports:
+          - 5000:5000 # Web UI
+          - 1935:1935 # RTMP
+          - 8554:8554 # RTSP
+          - 8888:8888 # HLS
+      environment:
+          - WYZE_EMAIL=Carlo@vcloudinfo # Replace with wyze email
+          - WYZE_PASSWORD=PasswordPasswordPassword # Replace with wyze password
+          - IGNORE_OFFLINE=true 
+          - QUALITY=SD30
+          - SNAPSHOT=RTSP
