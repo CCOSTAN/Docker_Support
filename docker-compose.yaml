@@ -29,7 +29,7 @@ services:
     image: pihole/pihole:latest
     environment:
       - TZ=America/New_York
-      - WEBPASSWORD=admin!
+      - WEBPASSWORD=AdminPassword!
     ports:
       - "53:53/tcp"
       - "53:53/udp"
