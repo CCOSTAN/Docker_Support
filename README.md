@@ -48,7 +48,7 @@ This is my Docker-Compose YAML file.  Check it out to see what Containers I am r
     </a>
   </h4>
 
-<a name="logo" href="https://github.com/CCOSTAN/Home-AssistantConfig#logo"><img src="https://i.imgur.com/OTbLmcZ.png" alt="Bear Stone Containers" ></a>
+<a name="logo" href="https://github.com/CCOSTAN/Home-AssistantConfig#logo"><img src="https://i.imgur.com/GJnhSJb.png" alt="Bear Stone Containers" ></a>
 
 #### <a name="diagram"></a>Smart Home Diagram
 Here is how all the parts talk to each other.  Keep reading to see code examples and explanations.  
