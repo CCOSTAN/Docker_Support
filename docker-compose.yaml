@@ -29,7 +29,7 @@ services:
     image: pihole/pihole:latest
     environment:
       - TZ=America/New_York
-      - WEBPASSWORD=AdminPassword!
+      - WEBPASSWORD=[REDACTED]
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -47,25 +47,6 @@ services:
       backend:
         ipv4_address: '172.0.56.10'
 
-  netalertx:
-    container_name: netalertx
-    image: "jokobsk/netalertx:latest"      
-    network_mode: "host"        
-    restart: unless-stopped
-    volumes:
-      - ./pi-alert/config:/app/config
-      - ./pi-alert/db:/app/db      
-      - ./pi-alert/logs:/app/front/log
-      - ./etc-pihole/pihole-FTL.db:/etc/pihole/pihole-FTL.db
-      - ./etc-pihole/dhcp.leases:/etc/pihole/dhcp.leases
-      - /etc/localtime:/etc/localtime:ro
-    environment:
-      - TZ=America/New_York  
-      - PORT=20211
-    depends_on:
-      - pihole
-      - unifi
-
   mqtt:
     image: eclipse-mosquitto:latest
     container_name: "mqtt"
@@ -82,17 +63,29 @@ services:
       - TZ=America/New_York
 
   home-assistant:
-    image: ghcr.io/home-assistant/home-assistant:dev
+    image: ghcr.io/home-assistant/home-assistant:latest
     container_name: "hass"
     network_mode: host
     restart: always
     depends_on:
       - mqtt
+      - matter-server
     volumes:
       - ./homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
     environment:
       - TZ=America/New_York
+
+  matter-server:  
+    container_name: matter-server  
+    image: ghcr.io/home-assistant-libs/python-matter-server:stable  
+    restart: unless-stopped  
+    security_opt:  
+      - apparmor=unconfined  
+    volumes:  
+      - ./matter/data:/data  
+      - /run/dbus:/run/dbus:ro  
+    network_mode: host
 
   unifi:
     image: ghcr.io/linuxserver/unifi-controller:latest
@@ -117,10 +110,10 @@ services:
           # - 8189:8189/udp # WebRTC/ICE
           - 5000:5000 # WEB-UI
       environment:
-          - WYZE_EMAIL=someonenot@wyze.com
-          - WYZE_PASSWORD=SomeAWESOMEpASWORDThatisNotPassword
-          - API_ID=8441sdfwvfdgrevsdvrg
-          - API_KEY=[ThekEY]
+          - WYZE_EMAIL=[REDACTED]
+          - WYZE_PASSWORD=[REDACTED]
+          - API_ID=[REDACTED]
+          - API_KEY=[REDACTED]
           - IGNORE_OFFLINE=true 
           - QUALITY=HD60
           - SUBSTREAM=True
