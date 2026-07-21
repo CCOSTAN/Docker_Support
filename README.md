@@ -31,14 +31,6 @@ This is my Docker-Compose YAML file.  Check it out to see what Containers I am r
       Todo List
     </a>
     <span> | </span>
-    <a href="https://twitter.com/BearStoneHA">
-      Smart Home Stats
-    </a>
-    <span> | </span>
-    <a href="https://www.facebook.com/BearStoneHA">
-      Facebook
-    </a>
-    <span> | </span>
     <a href="https://github.com/CCOSTAN/Home-AssistantConfig/tree/master/config">
       Code
     </a>
@@ -61,7 +53,7 @@ Here is how all the parts talk to each other.  Keep reading to see code examples
 [Upgrading Cockpit](https://www.vcloudinfo.com/2019/07/how-to-upgrade-docker-cockpit-on-ubuntu-18-04.html)
 
 #**Still have questions on my Config?**
-**Message me on twitter :** [@CCostan](https://twitter.com/ccostan) or [@BearStoneHA](https://twitter.com/BearStoneHA)
+**Message me on X:** [@CCostan](https://x.com/ccostan)
 <p align="center">
 <a name="bottom" href="https://github.com/CCOSTAN/Home-AssistantConfig#logo"><img align="right" border="0" src="https://raw.githubusercontent.com/CCOSTAN/Home-AssistantConfig/master/config/www/custom_ui/floorplan/images/branding/up_arrow.png" width="22" ></a><br>
 <a href="http://eepurl.com/dmXFYz"><img align="center" border="0" src="https://raw.githubusercontent.com/CCOSTAN/Home-AssistantConfig/master/config/www/custom_ui/floorplan/images/branding/email_link.png" height="50" ></a><br>
