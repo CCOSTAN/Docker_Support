@@ -7,7 +7,7 @@
 <div align="center">
 
 [![X Follow](https://img.shields.io/static/v1?label=talk&message=3k&color=blue&logo=twitter&style=for-the-badge)](https://x.com/ccostan)
-[![YouTube Subscribe](https://img.shields.io/badge/VIEW-6.8K-FF0000&logo=Youtube&logoColor=%23DF5D44&style=for-the-badge)](https://www.youtube.com/vCloudInfo?sub_confirmation=1)
+[![YouTube Subscribe](https://img.shields.io/badge/VIEW-6.8K-FF0000?logo=Youtube&logoColor=%23DF5D44&style=for-the-badge)](https://www.youtube.com/vCloudInfo?sub_confirmation=1)
 [![GitHub Follow](https://img.shields.io/github/stars/CCOSTAN/Home-AssistantConfig?label=Code&amp;logo=Github&amp;style=for-the-badge)](https://github.com/CCOSTAN)
 
   <h4>
